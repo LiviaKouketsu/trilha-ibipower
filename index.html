@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trilha do IbiPower</title>
+<link rel="icon" href="assets/pet-guaxinim.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Ubuntu:wght@400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="marca">
+    <img src="assets/pet-guaxinim.svg" alt="">
+    <div><b>PET CODE</b><small>computação e design</small></div>
+  </div>
+  <div class="regua"></div>
+  <h1>Trilha do <span>IbiPower</span></h1>
+</header>
+
+<main class="jogo">
+  <section class="tabuleiro-area" aria-label="Tabuleiro">
+    <svg id="tabuleiro" viewBox="0 0 1000 640" role="img" aria-label="Tabuleiro com 20 casas">
+      <defs>
+        <filter id="sombra" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/>
+        </filter>
+        <clipPath id="clip-cabeca"><circle cx="0" cy="0" r="34"/></clipPath>
+        <symbol id="ico-escudo" viewBox="0 0 24 28">
+          <path d="M12 1 L22 5 V13 C22 20 17 25 12 27 C7 25 2 20 2 13 V5 Z" fill="#7FC3EE" stroke="#1F2F5C" stroke-width="2"/>
+          <path d="M7 14 L11 18 L17 9" fill="none" stroke="#1F2F5C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="ico-vilao" viewBox="0 0 24 24">
+          <circle cx="12" cy="10" r="8" fill="#fff"/>
+          <rect x="8" y="15" width="8" height="6" rx="1.5" fill="#fff"/>
+          <circle cx="9" cy="10" r="2.4" fill="#141414"/><circle cx="15" cy="10" r="2.4" fill="#141414"/>
+          <path d="M10.5 15 v3 M13.5 15 v3" stroke="#141414" stroke-width="1.4"/>
+        </symbol>
+        <symbol id="ico-risco" viewBox="0 0 24 24">
+          <path d="M12 2 L23 21 H1 Z" fill="#141414"/>
+          <path d="M12 9 v6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="12" cy="18" r="1.5" fill="#fff"/>
+        </symbol>
+      </defs>
+      <!-- Caminho da trilha (as casas são desenhadas sobre ele) -->
+      <path id="trilha" d="M 110 590 L 110 200 C 110 50, 330 50, 330 200 L 330 440 C 330 590, 550 590, 550 440 L 550 200 C 550 50, 770 50, 770 200 L 770 420 C 770 560, 820 590, 930 590" fill="none" stroke="none"/>
+      <g id="decoracao"></g>
+      <g id="casas"></g>
+      <g id="peao" filter="url(#sombra)">
+        <circle r="37" fill="#fff"/>
+        <circle r="37" fill="none" stroke="#ED701C" stroke-width="5"/>
+        <image href="assets/ibipower_head.png" x="-40" y="-36" width="80" height="80" clip-path="url(#clip-cabeca)"/>
+      </g>
+    </svg>
+    <ul class="legenda">
+      <li><svg viewBox="0 0 24 24"><use href="#ico-risco"/></svg>Casa de risco: tome uma decisão</li>
+      <li><svg viewBox="0 0 24 28"><use href="#ico-escudo"/></svg>Escudo de Cristal: corrige uma vulnerabilidade</li>
+      <li><span class="bola-vilao"><svg viewBox="0 0 24 24"><use href="#ico-vilao"/></svg></span>Vilão: explora suas vulnerabilidades</li>
+    </ul>
+  </section>
+
+  <aside class="painel">
+    <div class="heroi">
+      <img src="assets/ibipower.png" alt="IbiPower, o guardião dos dados">
+      <div class="balao" id="balao" aria-live="polite">Olá! Eu sou o IbiPower. Vamos atravessar a trilha tomando decisões seguras?</div>
+    </div>
+
+    <div class="bloco">
+      <div class="rotulo">Pontuação de segurança <b id="pontos">50</b></div>
+      <div class="medidor" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" id="medidor">
+        <div class="preenchido" id="barra"></div>
+        <span class="marca40"></span><span class="marca80"></span>
+      </div>
+      <div class="faixas"><span>Falhou</span><span>Média</span><span>Máxima</span></div>
+    </div>
+
+    <div class="bloco">
+      <div class="rotulo">Vulnerabilidades abertas <b id="qtd-vuln">0</b></div>
+      <ul class="vulns" id="vulns"><li class="vazio">Nenhuma. Seu escudo está forte!</li></ul>
+    </div>
+
+    <div class="acao">
+      <div class="dado" id="dado" aria-hidden="true"></div>
+      <button class="botao" id="rolar" type="button">Rolar o dado</button>
+    </div>
+    <p class="casa-atual" id="casa-atual">Você está no INÍCIO</p>
+  </aside>
+</main>
+
+<footer class="rodape">
+  <span>Jogo de cibersegurança · Livia Kouketsu da Silva</span>
+  <span class="mono">PET Design&amp;Computação</span>
+</footer>
+
+<!-- Janela de início -->
+<dialog id="dlg-inicio" class="dlg">
+  <form method="dialog" class="cartao-dlg inicio">
+    <img class="ibi-inicio" src="assets/ibipower.png" alt="">
+    <div>
+      <div class="etiqueta">JOGO DE CIBERSEGURANÇA</div>
+      <h2>Trilha do <span>IbiPower</span></h2>
+      <p>O Senhor Vaza-Tudo e o Ladrão de Pixels estão soltos na internet. Ajude o IbiPower a atravessar a trilha tomando decisões seguras.</p>
+      <ol class="regras">
+        <li>Role o dado e avance. O dado tem as faces <b>1, 1, 2, 2, 3 e 3</b>.</li>
+        <li>Nas <b>casas de risco</b>, escolha entre duas atitudes. Decisão certa: <b class="verde">+10</b>. Decisão errada: <b class="vermelho">−10</b> e você ganha uma <b>vulnerabilidade</b>.</li>
+        <li>Nas <b>casas do vilão</b>, ele explora uma vulnerabilidade sua: <b class="vermelho">−15</b> e volta 2 casas. Sem vulnerabilidades, seu escudo bloqueia o ataque: <b class="verde">+10</b>.</li>
+        <li>O <b>Escudo de Cristal</b> corrige uma vulnerabilidade: <b class="verde">+5</b>.</li>
+        <li>No fim da trilha: <b>Falhou</b> (abaixo de 40), <b>Média</b> (40 a 79) ou <b>Máxima</b> (80 ou mais).</li>
+      </ol>
+      <label class="campo">Seu nome de guardião(ã)
+        <input id="nome" type="text" maxlength="24" placeholder="Ex.: Ana" autocomplete="off">
+      </label>
+      <button class="botao grande" id="comecar" value="ok">Começar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Janela de evento -->
+<dialog id="dlg-evento" class="dlg">
+  <div class="cartao-dlg evento">
+    <div class="evento-topo" id="ev-topo">
+      <span class="ev-casa" id="ev-casa">Casa 3</span>
+      <span class="ev-tipo" id="ev-tipo">Casa de risco</span>
+    </div>
+    <h2 id="ev-titulo">Phishing de e-mail</h2>
+    <p class="ev-texto" id="ev-texto"></p>
+    <div class="opcoes" id="ev-opcoes"></div>
+    <div class="resultado" id="ev-resultado" hidden>
+      <div class="res-cabeca" id="res-cabeca"></div>
+      <p id="res-texto"></p>
+      <p class="res-extra" id="res-extra"></p>
+      <button class="botao" id="ev-continuar" type="button">Continuar</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Janela final -->
+<dialog id="dlg-fim" class="dlg">
+  <div class="cartao-dlg fim">
+    <div class="fim-topo" id="fim-topo">
+      <div>
+        <div class="etiqueta" id="fim-nome">RESULTADO</div>
+        <h2 id="fim-titulo">Máxima</h2>
+        <p id="fim-sub"></p>
+      </div>
+      <div class="fim-pontos"><b id="fim-pontos">100</b><span>pontos</span></div>
+    </div>
+    <h3>Suas decisões</h3>
+    <ol class="historico" id="fim-lista"></ol>
+    <button class="botao grande" id="de-novo" type="button">Jogar de novo</button>
+  </div>
+</dialog>
+
+<script src="cenarios.js"></script>
+<script src="jogo.js"></script>
+</body>
+</html>
