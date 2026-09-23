@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 84" role="img" aria-label="Guaxinim do PET CODE">
+  <!-- orelhas -->
+  <path d="M6 40 C1 24 9 10 25 9 C31 9 36 12 38 15 C24 19 14 28 6 40 Z" fill="currentColor"/>
+  <path d="M114 40 C119 24 111 10 95 9 C89 9 84 12 82 15 C96 19 106 28 114 40 Z" fill="currentColor"/>
+  <!-- mascara em arco -->
+  <path d="M60 22 C33 22 16 38 13 58 C12 68 16 76 24 76 C31 76 35 71 35 64 C35 55 40 47 48 45 L48 70 C48 78 52 82 60 82 C68 82 72 78 72 70 L72 45 C80 47 85 55 85 64 C85 71 89 76 96 76 C104 76 108 68 107 58 C104 38 87 22 60 22 Z" fill="currentColor"/>
+  <!-- olhos -->
+  <path d="M24 46 C30 38 42 36 51 44 C44 53 32 54 24 46 Z" fill="#fff"/>
+  <path d="M96 46 C90 38 78 36 69 44 C76 53 88 54 96 46 Z" fill="#fff"/>
+  <circle cx="38" cy="45" r="5.2" fill="currentColor"/>
+  <circle cx="82" cy="45" r="5.2" fill="currentColor"/>
+</svg>
