@@ -1,5 +1,4 @@
 // Cenários das casas de risco (para criar outro, copie um bloco)
-// "vulnerabilidade" é o que o jogador ganha se errar
 const CENARIOS = [
   {
     tema: "Phishing de e-mail",
